@@ -45,7 +45,7 @@ class BusinessUser(db.Model):
     # BACKREF
     client = db.relationship('Client', backref='business_users')
     client_reward = db.relationship('ClientReward', backref='business_users')
-    # reward = db.relationship('Reward', backref='business_user')
+    reward = db.relationship('Reward', backref='business_user')
 
 
 #################################################
@@ -99,7 +99,7 @@ class Transaction(db.Model):
     trans_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     trans_appt = db.Column(db.Text, nullable=False)
     trans_date = db.Column(db.Date, nullable=False)
-    trans_cost = db.Column(db.Float, nullable=False)
+    trans_cost = db.Column(db.Text, nullable=False)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'))
 
     # TEMPORARY TEST CASE(create test file after creating CRUD functions)
