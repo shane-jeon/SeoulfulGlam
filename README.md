@@ -55,10 +55,10 @@ Seoulful Glam (or GlowUp, as my initial project was originally named), reinforce
 all that I had learned throughout my coding bootcamp. The Hackbright Academy
 curriculum taught me how to use the technologies needed to create a fullstack web app.
 
-In creating my web app, I worked my way from the backend to frontend.
+<ins>In creating my web app, I worked my way from the backend to frontend.</ins>
 
 <details>
-<summary>Creating the database, using PostgreSQL and SQLAlchemy</summary>
+<summary>**Creating the database, using PostgreSQL and SQLAlchemy**</summary>
 I began my first establishing a relational database (RDBMS)^ using PostgreSQL. 
 Using SQLAlchemy, as opposed to raw SQL, I used classes to create tables in
 the database, each of which held columns of data I wanted to include in said tables.
@@ -73,7 +73,7 @@ backref, including comments between tables with relationships to remember which 
 related to which.
 
 <details>
-<summary>What did I learn using PostgreSQL and SQLAlchemy?</summary>
+<summary>*What did I learn using PostgreSQL and SQLAlchemy?*</summary>
 A relational database links information from multiple tables by using primary
 and foreign keys, which uniquely identifies a row of data. The connection of primary
 and foreign keys are what creates the 'relationships' between records contained
@@ -85,9 +85,50 @@ While RDBMS isn't as easily scalable and flexible as non-relational databases,
 that really isn't an issue for the purpose of my project. From what I have been
 able to glean and understand, non-relational databases would be preferable
 for document data. 
+
 </details>
+***challenges***:
+My main challenges working on my database was coming up with the data structure
+model in the first place...
+
+  - figuring out the cardinalities of table relationships. 
+    - It helped me greatly to think aloud:
+      - What tables do I need in the first place?
+      - What data (column names) are needed in said tables?
+      - What about table relationships? And the type of relationship?
+        - "Business users will have *many* clients, but a client can only have *one* 
+        business user, a client can have *many* rewards and rewards can have *many* 
+        clients. 
+        - Understanding "many-to-many" relationships in my data model presented some 
+        difficulties, even more so in practical application.
+        - Asking for guidance in the right direction from my instructors helped me
+        understand middle/association tables and which I would need to choose depending
+        on my design decisions. 
+
+  - factoring in normalization, to avoid the two "primary sins" of data modeling, 
+    - repeating dependencies and/or representing multiple data of the same category 
+    in columns.
+  - remembering the significance in details (e.g.,tablename consistency, choices
+  in class names)
+
+My biggest blocker and headache was in seeding the database. I couldn't wrap
+my head around how, why, and what variables related to one another. Understanding
+data flow among my model.py, crud.py, and seed_database.py files were extremely 
+challenging. There really wasn't an instant solution to my challenge, instead
+it took time, repeated attempts, and knowing when to step away from my computer
+before attempting to tackle the problem again. After a week or so, all the pieces
+of the puzzle began to fall into place. 
+
+My challenges taught me a valuable lesson in debugging. Particularly learning to
+read raised errors and thinking logically to find the error based on the error 
+messages given in the terminal, as opposed to randomly adjusting code here and
+there without truly using problem solving techniques.
+
+
 </details>
 
+<details>
+<summary>CRUD functions</summary>
 After completing and testing by hand my model.py, I moved on to the CRUD functions
 that would automate the process of populating my database. As my crud.py deals
 with database connections, I added if __name__ == '__main__' block (will only
@@ -96,11 +137,33 @@ of crud.py. I wrote CRUD functions for each table, most of which were complex
 queries based on particular variables. I used mock data from mockaroo to populate
 my database. Now that my database is complete, it was time to move on to the server!
 
-The server
+### Challenges
+Particularly knowing how to write the correct queries when it came to navigating
+relationships. Reviewing lecture material repeatedly remedied that difficulty.
+</details>
+
+<details>
+<summary>server.py, Flask, Jinja2, WTForms, and creating secure login</summary>
+
+The server acted as the bridge between the backend and frontend. 
+I first created a simple skeleton of app routes, including homepage, login,
+and registration. Using the Flask web framework to define which requests to 
+respond to, how to respond to said requests, and generally navigating through
+the pre-written functions and classes in Flask to carry out the basics
+of what a web application needs to do. 
+
 
 
 ### Challenges
-seeding database
+- flask session
+- post v get requests
+- creating secure login
+- password hashing
+- understanding how I could retrieve and output information to the frontend
+</details>
+
+
+
 ### Built With
 
 * [Python](https://www.python.org/)
