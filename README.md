@@ -124,7 +124,11 @@ read raised errors and thinking logically to find the error based on the error
 messages given in the terminal, as opposed to randomly adjusting code here and
 there without truly using problem solving techniques.
 
-
+#### References
+* [relational database v. non-relational database](https://www.pluralsight.com/blog/software-development/relational-vs-non-relational-databases)
+* [why SQLAlchemy?](https://towardsdatascience.com/here-is-the-reason-why-sqlalchemy-is-so-popular-43b489d3fb00#:~:text=SQLAlchemy%20is%20the%20ORM%20of,of%20SQL%20to%20get%20started.)
+* [understanding postgres columns and row orientation](https://www.brianlikespostgres.com/poor-mans-column-oriented-database.html)
+* [what is structured data?](https://www.ibm.com/cloud/blog/structured-vs-unstructured-data)
 </details>
 
 <details>
