@@ -6,7 +6,7 @@ from random import choice, randint
 from datetime import datetime 
 
 import crud 
-import model 
+import model
 import server 
 
 os.system("dropdb rewardsprogram")
@@ -45,28 +45,28 @@ for business in business_data:
 
 
 #################################################
-###############     clients      ################
+###############     customers      ################
 #################################################
 
-with open('data/client_dummydata.json') as c:
-    client_data = json.loads(c.read())
+with open('data/customer_dummydata.json') as c:
+    customer_data = json.loads(c.read())
 
-client_in_db = []
+customer_in_db = []
 
-for client in client_data:
-    client_name, client_email, business, reward_point = (
-        client['client_name'],
-        client['client_email'],
+for customer in customer_data:
+    customer_name, customer_email, business, reward_point = (
+        customer['customer_name'],
+        customer['customer_email'],
         choice(business_in_db),
-        client['reward_point']
+        customer['reward_point']
     )
 
-    db_client = crud.create_client(client_name, 
-                                client_email, 
+    db_customer = crud.create_customer(customer_name, 
+                                customer_email, 
                                 business, 
                                 reward_point)
     
-    client_in_db.append(db_client)
+    customer_in_db.append(db_customer)
 
 #################################################
 ###############   transactions   ################
@@ -78,17 +78,17 @@ with open('data/transaction_dummydata.json') as t:
     transaction_in_db = []
 
     for transaction in transaction_data:
-        trans_appt, trans_date, trans_cost, client = (
+        trans_appt, trans_date, trans_cost, customer = (
             transaction['trans_appt'],
             transaction['trans_date'],
             transaction['trans_cost'],
-            choice(client_in_db)
+            choice(customer_in_db)
         )
 
     db_transaction = crud.create_trans(trans_appt, 
                                         trans_date, 
                                         trans_cost, 
-                                        client)
+                                        customer)
 
     transaction_in_db.append(db_transaction)
 
@@ -112,5 +112,5 @@ for reward in reward_data:
 
     reward_in_db.append(db_reward)
 
-for client in client_in_db:
-    crud.create_client_reward(client.client_id, randint(1, 30))
+for customer in customer_in_db:
+    crud.create_customer_reward(customer.customer_id, randint(1, 30))

@@ -33,3 +33,10 @@ bcrypt = Bcrypt(app)
 app.secret_key = '*xZJ_0d7c#+ii0C'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 
+# @app.route('/')
+# pass 
+
+# @app.route('/customers')
+# def get_customers():
+#     url = 
+

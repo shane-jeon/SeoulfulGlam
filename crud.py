@@ -1,9 +1,11 @@
 """CRUD ('CREATE, READ, UPDATE, DELETE') operations."""
 
+# make variables from files within nested directories available
+
 # CRUD.py acts as a bridge from db tables to python server
 
 # import from model.py module
-from model import db, BusinessUser, Client, Transaction, ClientReward, Reward, connect_to_db
+from model import db, BusinessUser, Customer, Transaction, CustomerReward, Reward, connect_to_db
 import bcrypt
 
 
@@ -77,73 +79,73 @@ def update_bUser(bUser_id):
 
 
 #################################################
-###############    CLIENTS     ##################
+###############    CUSTOMERS     ##################
 #################################################
 
-#######################  def create_client(...) #########################
-def create_client(client_name,
-                client_email,
+#######################  def create_customer(...) #########################
+def create_customer(customer_name,
+                customer_email,
                 business,
                 reward_point=0):
-    """Creates new client for Business User."""
+    """Creates new customer for Business User."""
 
-    client = Client(client_name=client_name,
-                    client_email=client_email,
+    customer = Customer(customer_name=customer_name,
+                    customer_email=customer_email,
                     bUser_id=business.bUser_id,
                     reward_point=reward_point
                     )
     
-    db.session.add(client)
+    db.session.add(customer)
     db.session.commit()
 
-    return client
+    return customer
 
-#######################  def show_all_client() ########################
-def show_all_client():
-    """Query all Clients."""
+#######################  def show_all_customer() ########################
+def show_all_customer():
+    """Query all Customerss."""
 
-    return Client.query.all()
+    return Customer.query.all()
 
-####################  def get_client_by_id(client_id) ######################
-def get_client_by_id(client_id):
-    """Query for client by client_id."""
+####################  def get_customer_by_id(customer_id) ######################
+def get_customer_by_id(customer_id):
+    """Query for customer by customer_id."""
     
-    client = Client.query.get(client_id)
+    customer = Customer.query.get(customer_id)
 
-    return client 
+    return customer 
 
-###################  def get_client_by_email(client_email) #######################
-def get_client_by_email(client_email):
-    """Queries for and gets client using client_email."""
+###################  def get_customer_by_email(customer_email) #######################
+def get_customer_by_email(customer_email):
+    """Queries for and gets customer using customer_email."""
 
-    client = Client.query.filter_by(client_email=client_email).first()
+    customer = Customer.query.filter_by(customer_email=customer_email).first()
 
-    return client 
+    return customer 
 
-#############  def adjust_client_points(client_id, reward_point) ###############
-def adjust_client_points(client_id, reward_point):
-    """Increment or decrement client reward point."""
+#############  def adjust_customer_points(customer_id, reward_point) ###############
+def adjust_customer_points(customer_id, reward_point):
+    """Increment or decrement customer reward point."""
 
-    client = Client.query.get(client_id)
+    customer = Customer.query.get(customer_id)
 
-    client.reward_point += reward_point 
+    customer.reward_point += reward_point 
 
     db.session.commit()
 
-    return client.reward_point
+    return customer.reward_point
 
 #################################################
 ##############   TRANSACTIONS     ################
 #################################################
 
 ####################  def create_transaction(...) ##################
-def create_trans(trans_appt, trans_date, trans_cost, client):
-    """Create a client transaction."""
+def create_trans(trans_appt, trans_date, trans_cost, customer):
+    """Create a customer transaction."""
 
     transaction = Transaction(trans_appt=trans_appt,
                         trans_date=trans_date,
                         trans_cost=trans_cost,
-                        client_id=client.client_id)
+                        customer_id=customer.customer_id)
 
     db.session.add(transaction)
     db.session.commit()
@@ -152,7 +154,7 @@ def create_trans(trans_appt, trans_date, trans_cost, client):
 
 ###################  def SHOW_ALL_TRANSACTION #######################
 def show_all_transaction():
-    """Show all client transactions."""
+    """Show all customer transactions."""
 
     return Transaction.query.all()
 
@@ -168,23 +170,23 @@ def get_transaction_by_id(trans_id):
 ###########    REWARDS/POINTS     ###############
 #################################################
 
-###################  def create_client_reward ######################
-def create_client_reward(client_id, reward_id):
-    """Create client reward."""
+###################  def create_customer_reward ######################
+def create_customer_reward(customer_id, reward_id):
+    """Create customer reward."""
 
-    client_reward = ClientReward(client_id=client_id, reward_id=reward_id)
+    customer_reward = CustomerReward(customer_id=customer_id, reward_id=reward_id)
 
-    db.session.add(client_reward)
+    db.session.add(customer_reward)
     db.session.commit()
 
-    return client_reward
+    return customer_reward
 
-##################  def get_client_reward(client_id)  ######################
-def get_client_reward(client_id):
-    """Query for client reward account."""
-    client_point = ClientReward.query.filter_by(client_id=client_id).first()
+##################  def get_customer_reward(customer_id)  ######################
+def get_customer_reward(customer_id):
+    """Query for customer reward account."""
+    customer_point = CustomerReward.query.filter_by(customer_id=customer_id).first()
 
-    return client_point
+    return customer_point
 
 ##########  def create_reward(reward_type, rewarrd_cost, business) #########
 def create_reward(reward_type, reward_cost, bUser_id):
@@ -223,5 +225,6 @@ def get_reward_by_id(reward_id):
     return reward
 
 if __name__ == '__main__':
+    from model import connect_to_db
     from server import app
     connect_to_db(app)

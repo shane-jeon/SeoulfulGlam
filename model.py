@@ -40,49 +40,49 @@ class BusinessUser(db.Model):
         bUser_username={self.bUser_username} bUser_business={self.bUser_business}>"""
     
     # BACK_POPULATES
-    # client = db.relationship('Client', back_populates='business_user')
+    # customer = db.relationship('Customer', back_populates='business_user')
     # It appears that foreign key IDs are not assigned because that is done w/seed.py
     # BACKREF
-    client = db.relationship('Client', backref='business_users')
-    client_reward = db.relationship('ClientReward', backref='business_users')
+    customer = db.relationship('Customer', backref='business_users')
+    customer_reward = db.relationship('CustomerReward', backref='business_users')
     reward = db.relationship('Reward', backref='business_user')
 
 
 #################################################
 #################################################
-###############  clients         ################
+###############  customers         ################
 ###############    table       ##################
 #################################################
 #################################################
+# might need to change customers to customers
+class Customer(db.Model):
+    """A customer."""
 
-class Client(db.Model):
-    """A client."""
+    __tablename__ = 'customers'
 
-    __tablename__ = 'clients'
-
-    client_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    client_name = db.Column(db.Text, nullable=False)
-    client_email = db.Column(db.String(254), nullable=False, unique=True)
+    customer_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    customer_name = db.Column(db.Text, nullable=False)
+    customer_email = db.Column(db.String(254), nullable=False, unique=True)
     reward_point = db.Column(db.Integer, nullable=True)
     bUser_id = db.Column(db.Integer, db.ForeignKey('business_users.bUser_id'))
 
     # TEMPORARY TEST CASE(create test file after creating CRUD functions)
-    # test_client = Client(client_name='Client Name', client_email='client@email.com', reward_point=0)
-    # db.session.add(test_client)
+    # test_customer = Customer(customer_name='Customer Name', customer_email='customer@email.com', reward_point=0)
+    # db.session.add(test_customer)
     # db.session.commit()
-    # client = Client.query.first()
-    # client
+    # customer = Customer.query.first()
+    # customer
     def __repr__(self):
-        return f"""<Client client_id={self.client_id}, client_name={self.client_name},
-        client_email={self.client_email}, reward_point={self.reward_point}, 
+        return f"""<Customer customer_id={self.customer_id}, customer_name={self.customer_name},
+        customer_email={self.customer_email}, reward_point={self.reward_point}, 
         id={self.bUser_id}>"""
 
     # BACK_POPULATES
-    # business_user = db.relationship('BusinessUser', back_populates='client')
+    # business_user = db.relationship('BusinessUser', back_populates='customer')
     # BACKREF
     # business_user = list of BusinessUser objects (backref)
-    client_reward = db.relationship('ClientReward', backref='clients')
-    transaction = db.relationship('Transaction', backref='clients')
+    customer_reward = db.relationship('CustomerReward', backref='customers')
+    transaction = db.relationship('Transaction', backref='customers')
 
 
 #################################################
@@ -93,14 +93,14 @@ class Client(db.Model):
 #################################################
 
 class Transaction(db.Model):
-    """A client transaction."""
+    """A customer transaction."""
     __tablename__='transactions'
 
     trans_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     trans_appt = db.Column(db.Text, nullable=False)
     trans_date = db.Column(db.Date, nullable=False)
     trans_cost = db.Column(db.Text, nullable=False)
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.customer_id'))
 
     # TEMPORARY TEST CASE(create test file after creating CRUD functions)
     # test_trans = Transaction(trans_appt='facial', trans_date=datetime.now(), trans_cost=100.00)
@@ -111,34 +111,35 @@ class Transaction(db.Model):
 
     def __repr__(self):
         return f"""<Transaction trans_id={self.trans_id,} trans_appt={self.trans_appt},
-        trans_date={self.trans_date}, client_id={self.client_id}>"""
+        trans_date={self.trans_date}, customer_id={self.customer_id}>"""
 
-    # client = list of Client objects (backref)
+    # customer = list of Customer objects (backref)
 
 
 #################################################
 #################################################
-###############  client_rewards  ################
+###############  customer_rewards  ################
 ###############    table       ##################
 #################################################
 #################################################
 
-class ClientReward(db.Model):
-    """A client-reward association table (to establish many-to-many relationship)."""
+class CustomerReward(db.Model):
+    """A customer-reward association table (to establish many-to-many relationship)."""
 
-    __tablename__ = 'client_rewards'
+    __tablename__ = 'customer_rewards'
     cReward_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.customer_id'))
     reward_id = db.Column(db.Integer, db.ForeignKey('rewards.reward_id'))
     bUser_id = db.Column(db.Integer, db.ForeignKey('business_users.bUser_id'))
 
     def __repr__(self):
-        return f"""<ClientReward cReward_id={self.cReward_id}, 
-        client_id={self.client_id}, reward_id={self.reward_id}>"""
+        # return f"""<CustomerReward cReward_id={self.cReward_id}
+        return f"""<CustomerReward Reward_id={self.Reward_id}, 
+        customer_id={self.customer_id}, reward_id={self.reward_id}>"""
     
     # BACKREF
-    reward = db.relationship('Reward', backref='client_rewards')
-    # client = list of Client objects
+    reward = db.relationship('Reward', backref='customer_rewards')
+    # customer = list of Customer objects
     # business_user = list of BusinessUser objects
 
 #################################################
@@ -169,7 +170,7 @@ class Reward(db.Model):
         reward_type={self.reward_type}>"""
     
     # BACKREF relationships
-    # client_reward = list of ClientReward objects
+    # customer_reward = list of CustomerReward objects
     # business_user = list of BusinessUser objects
 
 def connect_to_db(flask_app, db_uri="postgresql:///rewardsprogram", echo=True):

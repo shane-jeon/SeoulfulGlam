@@ -7,6 +7,7 @@
       <ul>
         <li><a href="#inspiration">Inspiration</a></li>
         <li><a href="#major-takeaways">Major Takeaways</a></li>
+        <li><a href="#alterations-from-original">Alterations from GlowUp</a></li>
         <li><a href="#challenges">Challenges</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
@@ -141,6 +142,25 @@ of crud.py. I wrote CRUD functions for each table, most of which were complex
 queries based on particular variables. I used mock data from mockaroo to populate
 my database. Now that my database is complete, it was time to move on to the server!
 
+### Alterations from GlowUp
+After creating database tables, CRUD functions, and seed_database.py, I realized
+that I needed to make certain changes to cater to its specific purpose as opposed
+to the generalized nature of my original application. I've listed
+the changes below, along with the dates the changes were made.
+
+5/11/2022
+- Changed 'clients' to 'customers' to match data that will be imported from Square
+- As this web application will purely have one user, I am adjusting (or possibly
+removing) the business user table and dummy data)
+--> possibility to create 3 accounts? administrator, business owner, and dummy account 
+to test and play with (for people who want to see project in practical application)
+- Changing 'rewards' to 'facials'
+- Square objects 'transactions' do not list type of booking
+- Will need to create 'bookings' table, but also keep transaction --> make relationship
+--> if booking has matching transaction, THEN a facial point can be added, else no
+(unless there is a way I can ensure that points will not be added if booking is cancelled)
+----> blocker...can't figure out how to add booking to sandbox account, keep
+coming across error stating "employee_attributions" needed.
 ### Challenges
 Particularly knowing how to write the correct queries when it came to navigating
 relationships. Reviewing lecture material repeatedly remedied that difficulty.
